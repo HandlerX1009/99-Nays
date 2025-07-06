@@ -70,7 +70,7 @@ function Module.GrabItems() -- Main function
         elseif ItemTypes["IsSapling"] then
 
             BringItem(Item, CFrame.new(31, 1, -31))
-            PlantRemote:FireServer(Item, Vector3.new(31, 1, -31))
+            PlantRemote:InvokeServer(Item, Vector3.new(31, 1, -31))
 
         elseif ItemTypes["IsFuel"] then
         
