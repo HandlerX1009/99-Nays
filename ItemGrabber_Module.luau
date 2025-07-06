@@ -7,6 +7,8 @@ local DragRemotes = {
     ReplicatedStorage.RemoteEvents.StopDraggingItem
 }
 
+local PlantRemote = ReplicatedStorage.RemoteEvents.RequestPlantItem
+
 local ItemFolder = workspace.Items
 local MapFolder = workspace.Map
 
@@ -21,6 +23,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsWood = Item.Name == "Log"
     local IsHealing = Item.Name == "Bandage" or Item.Name == "MedKit" or Item.Name == "Cake"
     local IsGem = Item.Name == "Cultist Gem"
+    local IsSapling = Item.Name == "Sapling"
     
     local ItemTypes = {
         ["IsScrap"] = IsScrap,
@@ -30,6 +33,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
         ["IsWood"] = IsWood,
         ["IsGem"] = IsGem,
         ["IsAmmo"] = IsAmmo,
+        ["IsSapling"] = IsSapling,
     }
     
     return ItemTypes
@@ -62,7 +66,12 @@ function Module.GrabItems() -- Main function
         elseif ItemTypes["IsHealing"] then
         
             BringItem(Item, CFrame.new(-34, 4, -23))
-        
+
+        elseif ItemTypes["IsSapling"] then
+
+            BringItem(Item, CFrame.new(31, 1, -31))
+            PlantRemote:FireServer(Item, Vector3.new(31, 1, -31))
+
         elseif ItemTypes["IsFuel"] then
         
             BringItem(Item, CFrame.new(-34, 4, 17))
