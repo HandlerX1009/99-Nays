@@ -35,6 +35,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     return ItemTypes
 end
 
+return Module
 function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame]
     DragRemotes[1]:FireServer(Item) -- Take ownership
     
@@ -78,3 +79,5 @@ function Module.GrabItems() -- Main function
         end
     end
 end
+
+return Module
