@@ -9,6 +9,7 @@ local DamageRemote = ReplicatedStorage.RemoteEvents.ToolDamageObject
 
 local AnimalFolder = workspace.Characters
 local FoliageFolder = workspace.Map.Foliage
+local LandmarkFolder = workspace.Map.Landmarks
 
 function GrabAnimals() -- Get every animal with a valid primarypart on the map
     local Animals = {}
@@ -29,7 +30,7 @@ end
 function GrabTrees() -- Get every tree with a valid primarypart on the map
     local Trees = {}
 
-    for _, Tree in pairs(FoliageFolder:GetChildren()) do
+    local function DetermineTree(Tree)
         local PrimaryPart = Tree.PrimaryPart
 
         if not PrimaryPart then
@@ -39,6 +40,13 @@ function GrabTrees() -- Get every tree with a valid primarypart on the map
         if string.find(Tree.Name, "Tree") then
             table.insert(Trees, Tree)
         end
+    end
+
+    for _, Tree in pairs(FoliageFolder:GetChildren()) do
+        DetermineTree(Tree)
+    end
+    for _, Tree in pairs(LandmarkFolder:GetChildren()) do
+        DetermineTree(Tree)
     end
 
     return Trees
