@@ -28,7 +28,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsHealing = Item.Name == "Bandage" or Item.Name == "MedKit" or Item.Name == "Cake"
     local IsGem = Item.Name == "Cultist Gem"
     local IsSapling = Item.Name == "Sapling"
-    local IsUncooked = Item.Name == "Morsel" or Item.Name == "Steak
+    local IsUncooked = Item.Name == "Morsel" or Item.Name == "Steak"
     local IsChair = Item.Name == "Chair"
     
     local ItemTypes = {
