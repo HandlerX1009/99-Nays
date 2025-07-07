@@ -9,12 +9,14 @@ local DragRemotes = {
 
 local PlantRemote = ReplicatedStorage.RemoteEvents.RequestPlantItem
 local CookRemote = ReplicatedStorage.RemoteEvents.RequestCookItem
+local ScrapRemote = ReplicatedStorage.RemoteEvents.RequestScrapItem
 
 local ItemFolder = workspace.Items
 local MapFolder = workspace.Map
 
 local Scrapper = MapFolder.Campground.Scrapper
 local Fire = MapFolder.Campground.MainFire
+local CraftingBench = MapFolder.Campground.CraftingBench
 
 function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsScrap = Item:GetAttribute("Scrappable")
@@ -79,7 +81,9 @@ function Module.GrabItems() -- Main function
     
         if SimplifiedTypes["Grindable"] then
         
-            BringItem(Item, Scrapper.WorldPivot)
+            coroutine.wrap(function()
+                ScrapRemote:InvokeServer(CraftingBench, Item)
+            end)()
         
         elseif ItemTypes["IsHealing"] then
         
@@ -88,7 +92,10 @@ function Module.GrabItems() -- Main function
         elseif ItemTypes["IsSapling"] then
 
             BringItem(Item, CFrame.new(31, 1, -31))
-            PlantRemote:InvokeServer(Item, Vector3.new(31, 1, -31))
+
+            coroutine.wrap(function()
+                PlantRemote:InvokeServer(Item, Vector3.new(31, 1, -31))
+            end)()
 
         elseif ItemTypes["IsFuel"] then
         
