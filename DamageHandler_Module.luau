@@ -43,13 +43,13 @@ function ReturnBestDamager() -- Find player's best damaging item and return it
 end
 
 function Module.DamageAllAnimals() -- Damage every animal returned
-    local PlayerAxe = ReturnPlayerAxe()
+    local PlayerBestItem = ReturnBestDamager()
     
     for _, Animal in pairs(GrabAnimals()) do
         coroutine.wrap(function()
             DamageRemote:InvokeServer(
                 Animal,
-                PlayerAxe,
+                PlayerBestItem,
                 0,
                 Animal.PrimaryPart.CFrame
             )
