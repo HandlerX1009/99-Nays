@@ -9,7 +9,6 @@ local DragRemotes = {
 
 local PlantRemote = ReplicatedStorage.RemoteEvents.RequestPlantItem
 local CookRemote = ReplicatedStorage.RemoteEvents.RequestCookItem
-local ScrapRemote = ReplicatedStorage.RemoteEvents.RequestScrapItem
 
 local ItemFolder = workspace.Items
 local MapFolder = workspace.Map
