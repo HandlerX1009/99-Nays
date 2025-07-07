@@ -24,12 +24,22 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
     return Animals
 end
 
-function ReturnPlayerAxe() -- Find player's axe and return it
+function ReturnBestDamager() -- Find player's best damaging item and return it
+    local BestDamage, BestItem = -math.huge, nil
+
     for _, Item in pairs(LocalPlayer.Inventory:GetChildren()) do
-        if string.find(Item.Name, "Axe") then
-            return Item
+        local DamageStatistic = Item:GetAttribute("WeaponDamage")
+
+        if not DamageStatistic then -- [Item] isn't a damaging item
+            continue
+        end
+
+        if DamageStatistic > BestDamage then
+            BestDamage, BestItem = DamageStatistic, Item
         end
     end
+
+    return BestItem
 end
 
 function Module.DamageAllAnimals() -- Damage every animal returned
