@@ -19,6 +19,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsFood = Item:GetAttribute("RestoreHunger")
     local IsFuel = Item:GetAttribute("BurnFuel")
     local IsAmmo = Item:GetAttribute("RevolverAmmo") or Item:GetAttribute("RifleAmmo")
+    local IsGun = Item:GetAttribute("ReloadTime")
     
     local IsWood = Item.Name == "Log"
     local IsHealing = Item.Name == "Bandage" or Item.Name == "MedKit" or Item.Name == "Cake"
@@ -34,6 +35,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
         ["IsGem"] = IsGem,
         ["IsAmmo"] = IsAmmo,
         ["IsSapling"] = IsSapling,
+        ["IsGun"] = IsGun,
     }
     
     return ItemTypes
@@ -79,7 +81,11 @@ function Module.GrabItems() -- Main function
         elseif ItemTypes["IsFood"] then
         
             BringItem(Item, CFrame.new(-0, 4, 38))
-        
+
+        elseif ItemTypes["IsGun"] then
+
+            BringItem(Item, CFrame.new(-6, 4, -23))
+
         elseif ItemTypes["IsAmmo"] then
         
             BringItem(Item, CFrame.new(34, 4, 44))
