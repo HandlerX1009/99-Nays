@@ -18,7 +18,7 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
         local PrimaryPart = Animal.PrimaryPart
     
         if not PrimaryPart then
-            return
+            continue
         end
     
         table.insert(Animals, Animal)
@@ -30,11 +30,11 @@ end
 function GrabTrees() -- Get every tree with a valid primarypart on the map
     local Trees = {}
 
-    function DetermineTree(Tree)
+    local function DetermineTree(Tree)
         local PrimaryPart = Tree.PrimaryPart
 
         if not PrimaryPart then
-            continue
+            return
         end
 
         if string.find(Tree.Name, "Tree") then
