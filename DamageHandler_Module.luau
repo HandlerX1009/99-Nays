@@ -18,7 +18,7 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
         local PrimaryPart = Animal.PrimaryPart
     
         if not PrimaryPart then
-            continue
+            return
         end
     
         table.insert(Animals, Animal)
