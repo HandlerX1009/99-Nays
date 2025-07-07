@@ -44,7 +44,7 @@ end
 function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame]
     DragRemotes[1]:FireServer(Item) -- Take ownership
     
-    Item:PivotTo(CFrame)
+    Item.PrimaryPart.CFrame = CFrame
     
     DragRemotes[2]:FireServer(Item) -- Release ownership
 end
