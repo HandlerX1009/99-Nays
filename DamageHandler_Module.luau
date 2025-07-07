@@ -6,7 +6,9 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 local DamageRemote = ReplicatedStorage.RemoteEvents.ToolDamageObject
+
 local AnimalFolder = workspace.Characters
+local FoliageFolder = workspace.Map.Foliage
 
 function GrabAnimals() -- Get every animal with a valid primarypart on the map
     local Animals = {}
@@ -22,6 +24,18 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
     end
     
     return Animals
+end
+
+function GrabTrees()
+    local Trees = {}
+
+    for _, Tree in pairs(FoliageFolder:GetChildren()) do
+        if string.find(Tree.Name, "Tree") then
+            table.insert(Trees, Tree)
+        end
+    end
+
+    return Trees
 end
 
 function ReturnBestDamager() -- Find player's best damaging item and return it
@@ -42,6 +56,14 @@ function ReturnBestDamager() -- Find player's best damaging item and return it
     return BestItem
 end
 
+function ReturnPlayerAxe() -- Find player's axe
+    for _, Item in pairs(LocalPlayer.Inventory:GetChildren()) do
+        if string.find(Item.Name, "Axe") then
+            return Item
+        end
+    end
+end
+
 function Module.DamageAllAnimals() -- Damage every animal returned
     local PlayerBestItem = ReturnBestDamager()
     
@@ -52,6 +74,21 @@ function Module.DamageAllAnimals() -- Damage every animal returned
                 PlayerBestItem,
                 0,
                 Animal.PrimaryPart.CFrame
+            )
+        end)()
+    end
+end
+
+function Module.DamageAllTrees() -- Damage every tree returned
+    local PlayerAxe = ReturnPlayerAxe()
+
+    for _, Tree in pairs(GrabTrees())
+        coroutine.wrap(function()
+            DamageRemote:InvokeServer(
+                Tree,
+                PlayerAxe,
+                0,
+                Tree.PrimaryPart.CFrame
             )
         end)()
     end
