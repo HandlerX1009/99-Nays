@@ -16,7 +16,6 @@ local MapFolder = workspace.Map
 
 local Scrapper = MapFolder.Campground.Scrapper
 local Fire = MapFolder.Campground.MainFire
-local CraftingBench = MapFolder.Campground.CraftingBench
 
 function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsScrap = Item:GetAttribute("Scrappable")
@@ -81,9 +80,7 @@ function Module.GrabItems() -- Main function
     
         if SimplifiedTypes["Grindable"] then
         
-            coroutine.wrap(function()
-                ScrapRemote:InvokeServer(CraftingBench, Item)
-            end)()
+            BringItem(Item, Scrapper.WorldPivot)
         
         elseif ItemTypes["IsHealing"] then
         
