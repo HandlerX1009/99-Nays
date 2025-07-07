@@ -30,6 +30,12 @@ function GrabTrees()
     local Trees = {}
 
     for _, Tree in pairs(FoliageFolder:GetChildren()) do
+        local PrimaryPart = Tree.PrimaryPart
+
+        if not Primarypart then
+            continue
+        end
+
         if string.find(Tree.Name, "Tree") then
             table.insert(Trees, Tree)
         end
