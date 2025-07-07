@@ -28,7 +28,8 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsHealing = Item.Name == "Bandage" or Item.Name == "MedKit" or Item.Name == "Cake"
     local IsGem = Item.Name == "Cultist Gem"
     local IsSapling = Item.Name == "Sapling"
-    local IsUncooked = Item.Name == "Morsel" or Item.Name == "Steak"
+    local IsUncooked = Item.Name == "Morsel" or Item.Name == "Steak
+    local IsChair = Item.Name == "Chair"
     
     local ItemTypes = {
         ["IsScrap"] = IsScrap,
@@ -41,6 +42,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
         ["IsSapling"] = IsSapling,
         ["IsGun"] = IsGun,
         ["IsUncooked"] = IsUncooked,
+        ["IsChair"] = IsChair,
     }
     
     return ItemTypes
@@ -71,7 +73,7 @@ function Module.GrabItems() -- Main function
         local ItemTypes = DetermineItemType(Item)
         
         local SimplifiedTypes = {
-            ["Grindable"] = ItemTypes["IsScrap"] or ItemTypes["IsWood"] or ItemTypes["IsGem"]
+            ["Grindable"] = ItemTypes["IsScrap"] or ItemTypes["IsWood"] or ItemTypes["IsGem"] or ItemTypes["IsChair"]
         }
 
         if ItemTypes["IsUncooked"] then
