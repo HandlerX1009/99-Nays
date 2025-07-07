@@ -82,7 +82,7 @@ end
 function Module.DamageAllTrees() -- Damage every tree returned
     local PlayerAxe = ReturnPlayerAxe()
 
-    for _, Tree in pairs(GrabTrees())
+    for _, Tree in pairs(GrabTrees()) do
         coroutine.wrap(function()
             DamageRemote:InvokeServer(
                 Tree,
