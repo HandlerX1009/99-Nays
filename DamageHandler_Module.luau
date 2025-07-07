@@ -30,7 +30,7 @@ end
 function GrabTrees() -- Get every tree with a valid primarypart on the map
     local Trees = {}
 
-    local function DetermineTree(Tree)
+    function DetermineTree(Tree)
         local PrimaryPart = Tree.PrimaryPart
 
         if not PrimaryPart then
