@@ -46,6 +46,10 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
 end
 
 function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame]
+    if not Item.PrimaryPart then
+        return
+    end
+
     DragRemotes[1]:FireServer(Item) -- Take ownership
     
     Item.PrimaryPart.CFrame = CFrame
