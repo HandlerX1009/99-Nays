@@ -26,13 +26,13 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
     return Animals
 end
 
-function GrabTrees()
+function GrabTrees() -- Get every tree with a valid primarypart on the map
     local Trees = {}
 
     for _, Tree in pairs(FoliageFolder:GetChildren()) do
         local PrimaryPart = Tree.PrimaryPart
 
-        if not Primarypart then
+        if not PrimaryPart then
             continue
         end
 
