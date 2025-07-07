@@ -24,7 +24,7 @@ function GrabAnimals() -- Get every animal with a valid primarypart on the map
     return Animals
 end
 
-function ReturnPlayerAxe()
+function ReturnPlayerAxe() -- Find player's axe and return it
     for _, Item in pairs(LocalPlayer.Inventory:GetChildren()) do
         if string.find(Item.Name, "Axe") then
             return Item
