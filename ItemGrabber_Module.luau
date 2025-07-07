@@ -8,11 +8,13 @@ local DragRemotes = {
 }
 
 local PlantRemote = ReplicatedStorage.RemoteEvents.RequestPlantItem
+local CookRemote = ReplicatedStorage.RemoteEvents.RequestCookItem
 
 local ItemFolder = workspace.Items
 local MapFolder = workspace.Map
 
 local Scrapper = MapFolder.Campground.Scrapper
+local Fire = MapFolder.Campground.MainFire
 
 function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsScrap = Item:GetAttribute("Scrappable")
@@ -25,6 +27,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
     local IsHealing = Item.Name == "Bandage" or Item.Name == "MedKit" or Item.Name == "Cake"
     local IsGem = Item.Name == "Cultist Gem"
     local IsSapling = Item.Name == "Sapling"
+    local IsUncooked = Item.Name == "Morsel" or Item.Name == "Steak"
     
     local ItemTypes = {
         ["IsScrap"] = IsScrap,
@@ -36,6 +39,7 @@ function DetermineItemType(Item) -- Determine what [Item] is a class of
         ["IsAmmo"] = IsAmmo,
         ["IsSapling"] = IsSapling,
         ["IsGun"] = IsGun,
+        ["IsUncooked"] = IsUncooked,
     }
     
     return ItemTypes
@@ -50,9 +54,13 @@ function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame
 end
 
 function Module.GrabItems() -- Main function
-    for _, Item in pairs(ItemFolder:GetChildren()) do
+    for I, Item in pairs(ItemFolder:GetChildren()) do
         if not Item:IsA("Model") then
             continue
+        end
+
+        if I % 25 == 0 then -- Prevent lagging from mass teleportation
+            task.wait()
         end
         
         local ItemTypes = DetermineItemType(Item)
@@ -60,6 +68,10 @@ function Module.GrabItems() -- Main function
         local SimplifiedTypes = {
             ["Grindable"] = ItemTypes["IsScrap"] or ItemTypes["IsWood"] or ItemTypes["IsGem"]
         }
+
+        if ItemTypes["IsUncooked"] then
+            CookRemote:FireServer(Fire, Item)
+        end
     
         if SimplifiedTypes["Grindable"] then
         
@@ -77,7 +89,7 @@ function Module.GrabItems() -- Main function
         elseif ItemTypes["IsFuel"] then
         
             BringItem(Item, CFrame.new(-34, 4, 17))
-        
+
         elseif ItemTypes["IsFood"] then
         
             BringItem(Item, CFrame.new(-0, 4, 38))
