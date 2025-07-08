@@ -83,9 +83,9 @@ function Module.GrabItems() -- Main function
             continue
         end
 
-        if I % 25 == 0 then -- Prevent lagging from mass teleportation
+        --[[if I % 25 == 0 then -- Prevent lagging from mass teleportation
             task.wait()
-        end
+        end]]
         
         local ItemTypes = DetermineItemType(Item)
         
