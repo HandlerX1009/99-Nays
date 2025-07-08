@@ -52,17 +52,11 @@ function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame
         return
     end
 
-    local RopeAtt = Instance.new("RopeConstraint", Item.PrimaryPart)
+    local BodyPos = Instance.new("BodyPosition", Item.PrimaryPart)
 
-    local Att0 = Instance.new("Attachment", workspace.Terrain)
-    local Att1 = Instance.new("Attachment", Item.PrimaryPart)
-
-    Att0.CFrame = CFrame
-
-    RopeAtt.Length = 0
-
-    RopeAtt.Attachment0 = Att0
-    RopeAtt.Attachment1 = Att1
+    BodyPos.Position = CFrame.Position
+    BodyPos.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    BodyPos.P = 50000
 
     coroutine.wrap(function()
         DragRemotes[1]:FireServer(Item) -- Take ownership
