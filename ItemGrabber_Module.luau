@@ -67,7 +67,7 @@ function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame
     coroutine.wrap(function()
         DragRemotes[1]:FireServer(Item) -- Take ownership
 
-        task.wait()
+        task.wait(.5)
     
         DragRemotes[2]:FireServer(Item) -- Release ownership
 
