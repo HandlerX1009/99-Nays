@@ -54,9 +54,23 @@ function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame
 
     DragRemotes[1]:FireServer(Item) -- Take ownership
     
-    Item.PrimaryPart.CFrame = CFrame
+    local RopeAtt = Instance.new("RopeConstraint", Item.PrimaryPart)
+
+    local Att0 = Instance.new("Attachment", workspace.Terrain)
+    local Att1 = Instance.new("Attachment", Item.PrimaryPart)
+
+    Att0.CFrame = CFrame
+
+    RopeAtt.Length = 0
+
+    RopeAtt.Attachment0 = Att0
+    RopeAtt.Attachment1 = Att1
     
     DragRemotes[2]:FireServer(Item) -- Release ownership
+
+    RopeAtt:Destroy()
+    Att0:Destroy()
+    Att1:Destroy()
 end
 
 function Module.GrabItems() -- Main function
