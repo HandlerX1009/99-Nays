@@ -65,6 +65,8 @@ function BringItem(Item, CFrame) -- Take ownership of [Item] and move to [CFrame
 
     RopeAtt.Attachment0 = Att0
     RopeAtt.Attachment1 = Att1
+
+    task.wait()
     
     DragRemotes[2]:FireServer(Item) -- Release ownership
 
@@ -79,9 +81,9 @@ function Module.GrabItems() -- Main function
             continue
         end
 
-        if I % 25 == 0 then -- Prevent lagging from mass teleportation
+        --[[if I % 25 == 0 then -- Prevent lagging from mass teleportation
             task.wait()
-        end
+        end]]
         
         local ItemTypes = DetermineItemType(Item)
         
